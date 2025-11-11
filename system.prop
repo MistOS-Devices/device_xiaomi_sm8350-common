@@ -13,6 +13,16 @@ persist.dbg.volte_avail_ovr=1
 persist.dbg.vt_avail_ovr=1
 persist.dbg.wfc_avail_ovr=1
 
+# MIST OS
+ro.mist.display=1080 x 2400, 90 hz
+ro.mist.battery=4250mah
+ro.mist.soc=Snapdragon® 778G 5G
+ro.mist.camera=64MP + 13MP + 2MP
+ro.mist.front=20MP
+ro.mist.platform=SM73250
+ro.mist.screen=6.67' IPS LCD
+ro.mist.device.name=Xiaomi 11 Lite Ne 5g
+
 # Media
 media.aac_51_output_enabled=true
 media.stagefright.enable-aac=true
