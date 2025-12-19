@@ -24,7 +24,7 @@
   },
   {
     "repository": "itsvixano-dev/android/miuicamera/proprietary_vendor_xiaomi_miuicamera-lisa",
-    "target_path": "vendor/xiaomi/miuicamera",
+    "target_path": "vendor/xiaomi/miuicamera-lisa",
     "remote": "gitlab",
     "branch": "lineage-23.0"
   }
