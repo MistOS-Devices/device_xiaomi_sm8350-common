@@ -13,7 +13,7 @@
   {
     "repository": "xiaomi-lisa-devs/proprietary_vendor_xiaomi_lisa",
     "target_path": "vendor/xiaomi/lisa",
-    "remote": "gitlab",
+    "remote": "github",
     "branch": "lineage-23.2"
   },
   {
