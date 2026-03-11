@@ -11,7 +11,7 @@
     "branch": "lineage-23.2"
   },
   {
-    "repository": "itsvixano-dev/android/xiaomi-lisa-devs/proprietary_vendor_xiaomi_lisa",
+    "repository": "xiaomi-lisa-devs/proprietary_vendor_xiaomi_lisa",
     "target_path": "vendor/xiaomi/lisa",
     "remote": "gitlab",
     "branch": "lineage-23.2"
