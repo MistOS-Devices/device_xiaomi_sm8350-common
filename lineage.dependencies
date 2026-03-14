@@ -17,7 +17,7 @@
     "branch": "lineage-23.2"
   },
   {
-    "repository": "xiaomi-lisa-devs/proprietary_vendor_xiaomi_sm8350-common",
+    "repository": "MistOS-Devices/proprietary_vendor_xiaomi_sm8350-common",
     "target_path": "vendor/xiaomi/sm8350-common",
     "remote": "github",
     "branch": "lineage-23.2"
