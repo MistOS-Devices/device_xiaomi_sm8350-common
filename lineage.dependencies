@@ -5,6 +5,16 @@
     "branch": "16.2"
   },
   {
+    "repository": "packages_apps_DolbyUI",
+    "target_path": "packages/apps/DolbyUI",
+    "branch": "16.0"
+  },
+  {
+    "repository": "hardware_dolby_lisa",
+    "target_path": "hardware/dolby",
+    "branch": "sony-1.5"
+  },
+  {
     "repository": "lineageos/android_hardware_xiaomi",
     "target_path": "hardware/xiaomi",
     "remote": "github",
