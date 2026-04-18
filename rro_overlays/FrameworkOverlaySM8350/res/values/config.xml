@@ -9,6 +9,12 @@
          available on some devices. -->
     <bool name="config_enableHapticTextHandle">true</bool>
 
+    <!-- PowerOffAlarmService -->
+    <bool name="config_powerOffAlarmEnabled">true</bool>
+
+    <!-- Preferred max refresh rate at AOD & Ambient Display, if supported by the display. -->
+    <integer name="config_aodMaxRefreshRate">90</integer>
+
     <!-- This string array should be overridden by the device to present a list of radio
          attributes.  This is used by the connectivity manager to decide which networks can coexist
          based on the hardware -->
@@ -171,6 +177,10 @@
         <item>"/system/bin/surfaceflinger"</item>
     </string-array>
 
-    <!-- Default: 60 MB. Bytes that the PinnerService will pin for Home app -->
-    <integer name="config_pinnerHomePinBytes">6291456</integer>
+    <!-- True if camera app should be pinned via Pinner Service -->
+    <bool name="config_pinnerCameraApp">false</bool>
+
+    <!-- The amount to scale fullscreen snapshots for Overview and snapshot starting windows. -->
+    <item name="config_highResTaskSnapshotScale" format="float" type="dimen">0.8</item>
+
 </resources>

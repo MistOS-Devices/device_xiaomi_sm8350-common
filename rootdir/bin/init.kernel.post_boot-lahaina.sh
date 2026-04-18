@@ -34,8 +34,6 @@ function configure_zram_parameters() {
 	MemTotalStr=`cat /proc/meminfo | grep MemTotal`
 	MemTotal=${MemTotalStr:16:8}
 
-	low_ram=`getprop ro.config.low_ram`
-
 	# Zram disk - 75% for Go and < 2GB devices .
 	# For >2GB Non-Go devices, size = 50% of RAM size. Limit the size to 4GB.
 	# And enable lz4 zram compression for Go targets.
@@ -53,9 +51,7 @@ function configure_zram_parameters() {
 		let zRamSizeMB=4096
 	fi
 
-	if [ "$low_ram" == "true" ]; then
-		echo lz4 > /sys/block/zram0/comp_algorithm
-	fi
+        echo lz4 > /sys/block/zram0/comp_algorithm
 
 	if [ -f /sys/block/zram0/disksize ]; then
 		if [ -f /sys/block/zram0/use_dedup ]; then
@@ -123,7 +119,7 @@ function configure_memory_parameters() {
 
 	configure_zram_parameters
 	configure_read_ahead_kb_values
-	echo 100 > /proc/sys/vm/swappiness
+	echo 60 > /proc/sys/vm/swappiness
 	echo 1 > /proc/sys/vm/watermark_scale_factor
 
 	# add memory limit to camera cgroup
@@ -141,6 +137,9 @@ function configure_memory_parameters() {
 	if [ $MemTotal -le 8388608 ]; then
 		echo 0 > /proc/sys/vm/watermark_boost_factor
 	fi
+	
+	#Spawn kswapd threads which can help in fast reclaiming of pages
+	echo 1 > /proc/sys/vm/kswapd_threads
 }
 
 rev=`cat /sys/devices/soc0/revision`
@@ -191,8 +190,10 @@ echo 10 10 10 10 10 10 10 95 > /proc/sys/kernel/sched_coloc_busy_hyst_cpu_busy_p
 echo 325 > /proc/sys/kernel/walt_low_latency_task_threshold
 
 # cpuset parameters
-echo 0-3 > /dev/cpuset/background/cpus
-echo 0-3 > /dev/cpuset/system-background/cpus
+echo 0-1 > /dev/cpuset/background/cpus
+echo 0-3 > /dev/cpuset/restricted/cpus
+echo 0-2 > /dev/cpuset/system-background/cpus
+echo 0-6 > /dev/cpuset/foreground/cpus
 
 # configure governor settings for silver cluster
 echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
@@ -207,12 +208,8 @@ echo 691200 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
 echo 1 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
 
 # configure input boost settings
-if [ $rev == "1.0" ]; then
-	echo "0:1382800" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
-else
-	echo "0:1305600" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
-fi
-echo 120 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
+echo "0:1324800" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+echo 200 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
 
 # configure governor settings for gold cluster
 echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor

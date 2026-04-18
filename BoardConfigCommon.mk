@@ -53,6 +53,9 @@ TARGET_NO_BOOTLOADER := true
 # Display
 TARGET_SCREEN_DENSITY ?= 440
 
+# Camera
+TARGET_CAMERA_SERVICE_EXT_LIB := //$(COMMON_PATH):libcameraservice_extension.xiaomi_sm8350
+
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/config.fs
 
@@ -64,9 +67,10 @@ DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix.xml
 
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
-    hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml
+    hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml \
+    $(COMMON_PATH)/hidl/framework_compatibility_matrix.xml \
 
-DEVICE_MANIFEST_FILE := \
+DEVICE_MANIFEST_FILE += \
     $(COMMON_PATH)/hidl/manifest_lahaina.xml \
     $(COMMON_PATH)/hidl/manifest_xiaomi.xml
 
@@ -86,8 +90,8 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 
 TARGET_KERNEL_ADDITIONAL_FLAGS := TARGET_PRODUCT=$(PRODUCT_DEVICE)
 TARGET_KERNEL_NO_GCC := true
-TARGET_KERNEL_SOURCE := kernel/xiaomi/sm8350
-TARGET_KERNEL_CONFIG := vendor/lahaina-qgki_defconfig vendor/debugfs.config vendor/xiaomi_QGKI.config
+TARGET_KERNEL_SOURCE := kernel/xiaomi/lisa
+TARGET_KERNEL_CONFIG := lifesteal_lisa_defconfig
 
 BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
 BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
@@ -133,6 +137,7 @@ TARGET_COPY_OUT_VENDOR := vendor
 TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
 
 # Platform
+BOARD_VENDOR := xiaomi
 TARGET_BOARD_PLATFORM := lahaina
 
 # Properties
@@ -196,6 +201,10 @@ WIFI_HIDL_FEATURE_AWARE := true
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
+
+CONFIG_ACS := true
+CONFIG_IEEE80211AC := true
+WIFI_FEATURE_HOSTAPD_11AX := true
 
 # Inherit proprietary blobs
 include vendor/xiaomi/sm8350-common/BoardConfigVendor.mk

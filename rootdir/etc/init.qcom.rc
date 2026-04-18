@@ -31,6 +31,10 @@ import /vendor/etc/init/hw/init.target.rc
 on early-init
     # Change ownership of sysfs power control node
     chown system graphics /sys/class/drm/card0/device/power/control
+    
+    # Remove some data cache
+    rm /data/resource-cache
+    rm /data/system/package_cache
 
     # Disable UFS clock scaling
     write /sys/bus/platform/devices/1d84000.ufshc/clkscale_enable 0
@@ -77,7 +81,6 @@ on boot
     mkdir /dev/socket/qmux_radio 0770 radio radio
     chmod 2770 /dev/socket/qmux_radio
 
-    mkdir /mnt/vendor/persist/time 0770 system system
     mkdir /mnt/vendor/persist/secnvm 0770 system system
     mkdir /mnt/vendor/persist/iar_db 0770 system system
     mkdir /mnt/vendor/spunvm 0770 system system
@@ -236,6 +239,23 @@ on property:sys.boot_completed=1
     # Reinit lmkd to reconfigure lmkd properties
     setprop lmkd.reinit 1
 
+    # Enable PowerHAL hint processing
+    setprop vendor.powerhal.init 1
+
+    # Power hal
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
+    chown system system /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
+    chown system system /sys/devices/system/cpu/cpu7/cpufreq/schedutil/up_rate_limit_us
+    chown system system /sys/devices/system/cpu/cpu7/cpufreq/schedutil/down_rate_limit_us
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
+    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
+    chmod 0664 /sys/devices/system/cpu/cpu7/cpufreq/schedutil/up_rate_limit_us
+    chmod 0664 /sys/devices/system/cpu/cpu7/cpufreq/schedutil/down_rate_limit_us
+    
 service vendor.qrtr-ns /vendor/bin/qrtr-ns -f
     class core
     user vendor_qrtr
@@ -286,6 +306,13 @@ service qcom-sh /vendor/bin/init.qcom.sh
 on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1
 
+service vendor.charger /system/bin/chargeonlymode
+    class charger
+    user system
+    group system graphics input
+    capabilities SYS_BOOT
+    seclabel u:r:charger:s0
+
 service vendor.power_off_alarm /vendor/bin/power_off_alarm
     class core
     group system
@@ -305,3 +332,20 @@ service vendor.audio-hal /vendor/bin/hw/android.hardware.audio.service
     task_profiles ProcessCapacityHigh HighPerformance
     socket audio_hw_socket seqpacket 0666 system system
     onrestart restart audioserver
+
+service citsensor-hal-1-1 /vendor/bin/hw/vendor.xiaomi.hardware.citsensorservice@1.1-service
+        override
+        class late_start
+        user system
+        group system input
+        task_profiles ServiceCapacityLow
+
+service vendor.qti.hardware.display.composer /vendor/bin/hw/vendor.qti.hardware.display.composer-service
+    override
+    class hal animation
+    user system
+    group graphics drmrpc
+    capabilities SYS_NICE
+    onrestart restart surfaceflinger
+    socket pps stream 0660 system system
+    writepid /dev/cpuset/foreground/tasks
