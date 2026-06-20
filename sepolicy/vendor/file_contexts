@@ -39,6 +39,7 @@
 
 # Power
 /dev/xiaomi-touch                                                         u:object_r:vendor_touchfeature_device:s0
+/data/vendor/powerhal(/.*)?                                        u:object_r:powerhal_vendor_data_file:s0
 
 # Sensors
 /sys/bus/iio/devices                                                      u:object_r:vendor_sysfs_iio:s0
