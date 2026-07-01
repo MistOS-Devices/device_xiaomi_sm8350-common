@@ -249,6 +249,8 @@ PRODUCT_COPY_FILES += \
 # IFAA manager
 PRODUCT_PACKAGES += \
      IFAAService
+# ION
+$(call soong_config_set_bool,libion,legacy_impl,true)
 
 # IPACM
 PRODUCT_PACKAGES += \
