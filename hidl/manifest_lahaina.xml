@@ -81,7 +81,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <interface>
             <name>IQConfig</name>
             <instance>default</instance>
-        </interface>>
+        </interface>
     </hal>
     <!-- DSP Service -->
     <hal format="hidl">
