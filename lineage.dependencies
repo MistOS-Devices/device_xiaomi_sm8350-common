@@ -1,10 +1,29 @@
 [
   {
-    "repository": "android_kernel_xiaomi_sm8350",
-    "target_path": "kernel/xiaomi/sm8350"
+    "repository": "android_kernel_qcom_sm8350",
+    "target_path": "kernel/xiaomi/sm8350",
+    "branch": "17"
   },
   {
-    "repository": "android_hardware_xiaomi",
-    "target_path": "hardware/xiaomi"
+    "repository": "proprietary_vendor_xiaomi_lisa",
+    "target_path": "vendor/xiaomi/lisa",
+    "branch": "17"
+  },
+  {
+    "repository": "proprietary_vendor_xiaomi_sm8350-common",
+    "target_path": "vendor/xiaomi/sm8350-common",
+    "branch": "17"
+  },
+  {
+    "repository": "lineageos/android_hardware_xiaomi",
+    "target_path": "hardware/xiaomi",
+    "remote": "github",
+    "branch": "lineage-23.2"
+  },
+  {
+    "repository": "itsvixano-dev/android/miuicamera/proprietary_vendor_xiaomi_miuicamera-lisa",
+    "target_path": "vendor/xiaomi/miuicamera-lisa",
+    "remote": "gitlab",
+    "branch": "lineage-23.2"
   }
 ]
