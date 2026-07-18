@@ -102,7 +102,7 @@ BOARD_KERNEL_CMDLINE += swiotlb=0
 BOARD_KERNEL_CMDLINE += pcie_ports=compat
 BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072
@@ -162,7 +162,7 @@ VENDOR_SECURITY_PATCH := 2025-11-01
 
 # Sepolicy
 include device/qcom/sepolicy_vndr/SEPolicy.mk
-
+include device/lineage/sepolicy/libion/sepolicy.mk
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/private
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/public
 BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
